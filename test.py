@@ -31,7 +31,7 @@ except ImportError: # will be 3.x series
 parser = argparse.ArgumentParser(description='Test')
 parser.add_argument('--gpu_ids',default='0', type=str,help='gpu_ids: e.g. 0  0,1,2  0,2')
 parser.add_argument('--which_epoch',default='last', type=str, help='0,1,2,3...or last')
-parser.add_argument('--test_dir',default='../Market/pytorch',type=str, help='./test_data')
+parser.add_argument('--test_dir',default='/media/dustin/DATA/Research/2DReID/datasets/Market/pytorch',type=str, help='./test_data')
 parser.add_argument('--name', default='ft_ResNet50', type=str, help='save model path')
 parser.add_argument('--batchsize', default=256, type=int, help='batchsize')
 parser.add_argument('--linear_num', default=512, type=int, help='feature dimension: 512 or default or 0 (linear=False)')
@@ -315,7 +315,7 @@ with torch.no_grad():
     if opt.multi:
         mquery_feature = extract_feature(model,dataloaders['multi-query'])
 time_elapsed = time.time() - since
-print('Training complete in {:.0f}m {:.2f}s'.format(
+print('Testing complete in {:.0f}m {:.2f}s'.format(
             time_elapsed // 60, time_elapsed % 60))
 # Save to Matlab for check
 result = {'gallery_f':gallery_feature.numpy(),'gallery_label':gallery_label,'gallery_cam':gallery_cam,'query_f':query_feature.numpy(),'query_label':query_label,'query_cam':query_cam}

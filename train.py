@@ -23,6 +23,8 @@ from shutil import copyfile
 from circle_loss import CircleLoss, convert_label_to_similarity
 from instance_loss import InstanceLoss
 from ODFA import ODFA
+from tqdm.auto import tqdm
+
 version =  torch.__version__
 #fp16
 try:
@@ -41,7 +43,7 @@ parser = argparse.ArgumentParser(description='Training')
 parser.add_argument('--gpu_ids',default='0', type=str,help='gpu_ids: e.g. 0  0,1,2  0,2')
 parser.add_argument('--name',default='ft_ResNet50', type=str, help='output model name')
 # data
-parser.add_argument('--data_dir',default='../Market/pytorch',type=str, help='training dir path')
+parser.add_argument('--data_dir',default='~/Documents/Research/P003 - 2D ReID/Datasets/market1501',type=str, help='training dir path')
 parser.add_argument('--train_all', action='store_true', help='use all training data' )
 parser.add_argument('--batchsize', default=32, type=int, help='batchsize')
 parser.add_argument('--color_jitter', action='store_true', help='use color jitter in training' )
@@ -244,7 +246,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
             running_loss = 0.0
             running_corrects = 0.0
             # Iterate over data.
-            for iter, data in enumerate(dataloaders[phase]):
+            for iter, data in tqdm(enumerate(dataloaders[phase])):
                 # get the inputs
                 inputs, labels = data
                 now_batch_size,c,h,w = inputs.shape
